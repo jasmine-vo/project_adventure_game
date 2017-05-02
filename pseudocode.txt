@@ -1,0 +1,13 @@
+Print introduction to the game’s story.
+Ask the player for their name.
+Draw and print map of the rooms.
+
+Start Game:
+1. Ask the player what they would like to do or which direction they would like to go.
+2. Print the map showing where the user is.
+3. Describe the players surroundings.
+4. The player enters a command for their next move.
+5. Repeat the above steps until the player:
+	- Finds their way out, print “YOU WIN!”
+	- Runs into a dead end or runs out of energy, print “GAME OVER!”
+
