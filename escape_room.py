@@ -1,233 +1,341 @@
-class Player(object):
-	def __init__(self, health, bandaged, bookcase, inventory):
-		self.health = health
-		self.bandaged = bandaged
-		self.bookcase = bookcase
-		self.inventory = []
+import time
 
-player = Player(100, False, False, [])
-
-def cont():
-	raw_input("Press enter >>> ")
+health = 100
+bandaged = False
+bookcase = False
+has_key = False
+fridge = False
 
 def health_status():
-	if player.bandaged == False:
-		player.health = player.health - 25
-		print "\n\tYou wince from the pain in your leg.  Your health is now at " + str(player.health) + "%.\n"
-	else:
-		player.health = player.health - 10
-		print "\n\tYour health is now at " + str(player.health) + "%.\n"
+    """Prints player's current health percentage"""
 
-def cont_health():
-	cont()
-	health_status()
-	cont()
+    global health
+    global bandaged
 
-# update code below with each room/function with choices and actions
+    if bandaged == False:
+        health = health - 25
+        print "\tYou wince from the pain in your leg.\n"
+        print ">> Health: {}%\n".format(health)
+    else:
+        health = health - 10
+        print ">> Health: {}%\n".format(health)
+
+def print_line():
+    """Prints a line to break scenes in story"""
+
+    print "\n______________________________________________________________________\n"
 
 def intro():
-	print "\n\t\t\t\tESCAPE GAME\n"
-	print "\n\tWelcome to the Escape Game where every move you make is important,"
-	print "so choose wisely.\n"
-	print "\n\tYou wake up on the floor at the foot of a bed.  You look down"
-	print "and notice your right leg is severely injured.  You struggle to stand up"
-	print "using the bed as leverage.  You look around and take in your surroundings;"
-	print "you're in what appears to be a bedrooom, but it's not your bedroom.\n" # Describe the scene and print instructions for list of commands
-	cont()
-	print # map of house is displayed here
-	print "\n\tThere is a twin size bed on one side of the room, and a night stand"
-	print "on the left side of the bed.  The drawer in the nightstand is slightly"
-	print "ajar.  The walls are empty and there are no windows.  How can that be?"
-	print "There are 2 doors in the room.  One leads west, and another leads north.\n" # describe the scene
-	cont()
-	bedroom()
+    """This is the beginning of the game"""
 
-def bedroom():
-	# what happens when player enters or chooses door leading to bedroom
-	bedroom_choice_list = ["A - Try opening the door leading north.", "B - Try opening the door leading west.", "C - Look inside the nightstand."] #fill in choices
-	print "\nCurrent Location: Bedroom\n"
-	for choice in bedroom_choice_list:
-			print "\t"+choice
-	while player.health >= 1:
-		bedroom_choice = raw_input("\nWhat would you like to do? Enter A, B, or C >>> ")
-		if bedroom_choice.lower() == "a":
-			print "\n\tYou limp over to the door leading north, and twist the nob."
-			print "The door creaks as you swing it open.  You leave the room.\n"
-			print "\n\tYou enter a living room.  There is a couch, a coffee table,"
-			print "and a bookcase.  Ajacent to the living room is the kitchen.\n"
-			cont_health()
-			living_room()
-		elif bedroom_choice.lower() == "b":
-			print "\n\tYou limp over to the door leading west.  You open the door"
-			print "and enter a bathroom.  Once again there are no windows.  How strange,"
-			print "what kind of house has no windows?  You see a mirror and a sink with"
-			print "cabinets underneath.  Off to the side, there is a shower and a toilet.\n"
-			cont_health()
-			bathroom()
-		elif bedroom_choice.lower() == "c":
-			print "\n\tYou limp over to the nightstand.  You pull open the drawer."
-			print "It's empty...\n"
-			cont_health()
-			bedroom()
-		else:
-			print "\nHuh?  Please enter A, B, or C.\n"
-			bedroom()
-	else:
-		print "\nGAME OVER!!!\n"
-		exit()
-				
-def bathroom():
-	# what happens when player chooses door leading to bathroom
-	bathroom_choice_list = ["A - Look in the mirror.", "B - Open the cabinet.", "C - Leave the bathroom."] # fill in choices
-	print "\nCurrent Location: Bathroom\n"
-	for choice in bathroom_choice_list:
-			print "\t" + choice
-	bathroom_choice = raw_input("\nWhat would you like to do? Enter A, B, or C >>> ")
-	while player.health >= 1:	
-		if bathroom_choice.lower() == "a":
-			print "\n\tYou look in the mirror.  You don't look like yourself...\n"
-			cont()
-			bathroom()
-		elif bathroom_choice.lower() == "b":
-			if player.bandaged == False:
-				print "\n\tYou open the cabinet underneath the sink.  You find a"
-				print "box of bandages.  You take out a bandage and wrap it around"
-				print "your injured leg.  Hopefully this helps!\n"
-				player.bandaged = True
-				cont()
-				bathroom()
-			else:
-				print "\n\tIt's empty.\n"
-				cont()
-				bathroom()
-		elif bathroom_choice.lower() == "c":
-			print "\n\tYou turn around and leave the bathroom.  You are now back in"
-			print "the bedroom.\n"
-			cont_health()
-			bedroom()
-		else:
-			print "\n\tHuh?  Please enter A, B, or C.\n"
-			cont()
-			bathroom()
-	else:
-		print "\nGAME OVER!\n"
-		exit()
+    print "\n\t\t\t\t>>> ESCAPE <<<\n"
 
-def bookcase():
-	bookcase_choice_list = ["A - Pick up 'Amelia Bedelia'", "B - Pick up 'Book2'", "C - Pick up 'Learn Python the Hard Way'", "D - Explore living room."]
-	for choice in bookcase_choice_list:
-		print "\t" + choice
-	book_choice = raw_input("\nWhat would you like to do? Enter A, B, C, or D >>> ")
-	while player.health >= 1:	
-		if book_choice.lower() == "a":
-			print "\n\tYou pick up the book titled 'Amelia Bedelia'.  The"
-			print "book was written by Peggy Parish.  It's a children's"
-			print "book about a girl named Amelia, who takes everything"
-			print "literally.  You remember hearing about this book in class."
-			print "You place the book back on the shelf.\n"
-			bookcase()	
-		elif book_choice.lower() == "b":
-			print "\n\tYou pick up the book titled 'Book2'"
-			print # describe the book
-			print "You place the book back on the shelf.\n"
-			bookcase()
-		elif book_choice.lower() == "c":
-			if player.bookcase == False:
-				print "\n\tYou pick up the book titled 'Learn Python the Hard Way'"
-				print "You've been wanting this book! All of a sudden you hear a clang"
-				print "on the floor.  You look down and notice a key.  You place"
-				print "the book back on the shelf.  You put the key in your pocket."
-				player.inventory.append('key')
-				cont()
-				print "The key has been added to your inventory.\n"
-				print player.inventory
-				player.bookcase = True
-				bookcase()
-			elif player.bookcase == True:
-				print "\n\tYou pick up the book titled 'Learn Python the Hard Way'."
-				print "You place the book back on the shelf because you don't want to"
-				print "take what doesn't belong to you.\n"
-				bookcase()
-		elif book_choice.lower() == "d":
-			living_room()
-		else:
-			print "\n\tHuh?  Please enter A, B, C, or D.\n"
-			cont()
-			bookcase()
-	else:
-		print "\nGAME OVER!\n"
-		exit()			
+    print "\tWelcome to the Escape Game where every move you make is important,"
+    print "so choose wisely.\n\n"
 
-def living_room():
-	living_room_choice_list = ["A - Check out the bookcase.", "B - Go into the kitchen.", "C - Go into the bedroom."]
-	print "\nCurrent Location: Living Room\n"
-	for choice in living_room_choice_list:
-			print "\t"+choice
-	living_room_choice = raw_input("\nWhat would you like to do? Enter A, B, or C >>> ")
-	while player.health >= 1:	
-		if living_room_choice.lower() == "a":
-			print "\n\tYou limp over to the bookcase.\n"
-			cont_health()
-			print "\nCurrent Location: Living Room - Bookcase\n"
-			print "\n\tThere are a few books on the shelf.  You read over the titles:\n"
-			bookcase()
-		elif living_room_choice.lower() == "b":
-			print "\n\tYou limp over to the kitchen.  There are cabinets, a stove,"
-			print "and a fridge."
-			print "\n\tYou notice there is a hallway that leads to a door.\n"
-			cont_health()
-			kitchen()
-		elif living_room_choice.lower() == "c":
-			print "\n\tYou turn around and leave the living room.  You are now back in"
-			print "the bedroom.\n"
-			cont_health()
-			bedroom()
-		else:
-			print "\n\tHuh?  Please enter A, B, or C.\n"
-			cont()
-			living_room()
-	else:
-		print "\nGAME OVER!\n"
-		exit()
+    print "INTRODUCTION:\n"
 
-def kitchen():
-	kitchen_choice_list = ["A - Open the fridge.", "B - Go to the hallway.", "C - Go back to the living room."] #fill in choices
-	print "\nCurrent Location: Kitchen\n"
-	for choice in kitchen_choice_list:
-			print "\t" + choice
-	while player.health >= 1:
-		kitchen_choice = raw_input("\nWhat would you like to do? Enter A, B, or C: ")
-		if kitchen_choice.lower() == "a":
-			print "\n\t You open the fridge.  There isn't much inside but a bottle"
-			print "of water.  You take it out and drink it all.  You didn't realize"
-			print "how thirsty you were.\n"
-			cont()
-			player.health = player.health + 20
-			print "\n\tYour health is now at " + str(player.health) + "%.\n"
-			cont()
-			kitchen()
-		elif kitchen_choice.lower() == "b":
-			print "\n\tYou limp down the hallway.  Down the hall you see a door,"
-			print "but it's been locked from the inside with a padlock.\n"
-			if "key" in player.inventory:
-				print "\n\tYou have a key in your inventory!"
-				print "\n\tYou insert the key into the lock, and hear the click."
-				print "You remove the padlock and open the door."
-				print "\nYOU WIN!!"
-				exit()
-			else:
-				print "\nThere has to be a key that goes to this."
-				cont_health()
-				kitchen()
-		elif kitchen_choice.lower() == "c":
-			print "\n\tYou turn around and limp over to the living room.\n"
-			cont_health()
-			living_room()
-		else:
-			print "\nHuh?  Please enter A, B, or C.\n"
-			kitchen()
-	else:
-		print "\nGAME OVER!\n"
-		exit()
+    print "\tYou wake up on the floor in what appears to be a bedroom. You lift"
+    print "yourself up and look down to notice your right leg is injured.\n"
+
+    print "\tYou look around and take in your surroundings.  The room only contains"
+    print "a bed, nightstand, and an alarm clock.  The clock reads {}.  The drawer".format((time.strftime("%I:%M %p")))
+    print "in the nightstand is slightly ajar.  There are no windows.  How can that be?\n"
+
+    print "There are 2 doors; one leads west and another leads north.\n"
+
+    enter_bedroom()
+
+def play_again_or_exit():
+    """Asks player if they would like to play again, if yes, restarts game, if no, exits game"""
+
+    continue_game = raw_input("Would you like to play again? (Y/N)\n> ")
+    if continue_game[0].lower() == "y":
+        global health
+        global bandaged
+        global bookcase
+        global has_key
+        global fridge
+        health = 100
+        bandaged = False
+        bookcase = False
+        has_key = False
+        fridge = False
+        intro()
+    else:
+        print "\nGOODBYE!\n"
+        exit()
+
+def enter_bedroom():
+    """Player enters the bedroom and is given a list of four commands from bedroom choice list"""
+
+    bedroom_choice_list = ["A - Enter door leading north.", "B - Enter door leading west.", "C - Look inside the nightstand.", "D - Quit game."] #fill in choices
+    
+    print "CURRENT LOCATION: Bedroom\n"
+
+    for choice in bedroom_choice_list:
+            print "\t"+choice
+    
+    # while loop to print different outputs depending on player's choice
+    while health > 0:
+
+        bedroom_choice = raw_input("\nWhat would you like to do? (Enter A, B, C, or D)\n> ")
+        
+        if bedroom_choice.lower() == "a":
+            print_line()
+            print "\tYou leave the room as you limp passed the door leading north"
+            print "and enter a living room.  There is a couch, coffee table, and"
+            print "bookcase.  It appears to also lead to a kitchen.\n"
+            health_status()
+            enter_living_room()
+
+        elif bedroom_choice.lower() == "b":
+            print_line()
+            print "\n\tYou leave the room as you limp passed the door leading west"
+            print "and enter a bathroom.  Once again, there are no windows.  How strange,"
+            print "what kind of house has no windows?\n"
+            print "\tYou see a mirror and a sink with cabinets underneath.  Off to"
+            print "the side, there is a shower and a toilet.\n"
+            health_status()
+            enter_bathroom()
+
+        elif bedroom_choice.lower() == "c":
+            print_line()
+            print "\n\tYou limp over to the nightstand.  You pull open the drawer."
+            print "It's empty...\n"
+            health_status()
+            enter_bedroom()
+
+        elif bedroom_choice.lower() == "d":
+            exit()
+
+        else:
+            print_line()
+            print "\nHuh?  Please enter A, B, C, or D.\n"
+            enter_bedroom()
+
+    else:
+        print "\nGAME OVER!!!\n"
+        play_again_or_exit()
+
+def enter_bathroom():
+    """Player enters the bathroom and is given a list of four commands in bathroom choice list"""
+
+    global bandaged
+
+    bathroom_choice_list = ["A - Look in the mirror.", "B - Open the cabinet.", "C - Leave the bathroom.", "D - Quit game."]
+    
+    print "CURRENT LOCATION: Bathroom\n"
+
+    for choice in bathroom_choice_list:
+            print "\t" + choice
+
+    bathroom_choice = raw_input("\nWhat would you like to do? (Enter A, B, C, or D)\n> ")
+   
+    while health > 0:   
+        if bathroom_choice.lower() == "a":
+            print_line()
+            print "\n\tYou look in the mirror.  You don't look like yourself...\n"
+            enter_bathroom()
+
+        elif bathroom_choice.lower() == "b":
+            print_line()
+            if bandaged == False:
+                print "\n\tYou open the cabinet underneath the sink.  You find a"
+                print "box of bandages.  You take out a bandage and wrap it around"
+                print "your injured leg.  Hopefully this helps!\n"
+                bandaged = True
+                enter_bathroom()
+            else:
+                print "\n\tIt's empty.\n"
+                enter_bathroom()
+
+        elif bathroom_choice.lower() == "c":
+            print_line()
+            print "\n\tYou turn around and leave the bathroom.  You are now back in"
+            print "the bedroom.\n"
+            health_status()
+            enter_bedroom()
+
+        elif bathroom_choice.lower() == "d":
+            exit()
+
+        else:
+            print_line()
+            print "\nHuh?  Please enter A, B, C, or D.\n"
+            enter_bathroom()
+    else:
+        print "\nGAME OVER!\n"
+        play_again_or_exit()
+
+def visit_bookcase():
+    """Player visits bookcase and is given a list of four commands in bookcase choice list"""
+
+    global bookcase
+    global has_key
+
+    bookcase_choice_list = ["A - Pick up 'Amelia Bedelia'", "B - Pick up 'Learn Python the Hard Way'", "C - Explore living room.", "D - Quit game."]
+
+    print "CURRENT LOCATION: Bookcase in Living Room\n"
+
+    for choice in bookcase_choice_list:
+        print "\t" + choice
+
+    book_choice = raw_input("\nWhat would you like to do? (Enter A, B, C, or D)\n> ")
+    
+    while health > 0:   
+        if book_choice.lower() == "a":
+            print_line()
+            print "\n\tYou pick up the book titled 'Amelia Bedelia'.  The"
+            print "book was written by Peggy Parish.  It's a children's"
+            print "book about a girl named Amelia, who takes everything"
+            print "literally.  You remember hearing about this book in class."
+            print "You place the book back on the shelf.\n"
+            visit_bookcase()  
+
+        elif book_choice.lower() == "b":
+            print_line()
+
+            if bookcase == False:
+                print "\n\tYou pick up the book titled 'Learn Python the Hard Way'"
+                print "You've been wanting this book! All of a sudden you hear a clang"
+                print "on the floor.  You look down and notice a key.  You place"
+                print "the book back on the shelf.  You put the key in your pocket.\n"
+                has_key = True
+                bookcase = True
+                visit_bookcase()
+
+            elif bookcase == True:
+                print "\n\tYou pick up the book titled 'Learn Python the Hard Way'."
+                print "You place the book back on the shelf because you don't want to"
+                print "take what doesn't belong to you.\n"
+                visit_bookcase()
+        
+        elif book_choice.lower() == "c":
+            print_line()
+            enter_living_room()
+
+        elif book_choice.lower() == "d":
+            exit()
+
+        else:
+            print_line()
+            print "\nHuh?  Please enter A, B, C, or D.\n"
+            visit_bookcase()
+    else:
+        print "\nGAME OVER!\n"
+        play_again_or_exit()        
+
+def enter_living_room():
+    """Player enters living room and is given a list of four commands from living_room_choice_list"""
+    
+    living_room_choice_list = ["A - Check out the bookcase.", "B - Go into the kitchen.", "C - Go into the bedroom.", "D - Quit game."]
+   
+    print "CURRENT LOCATION: Living Room\n"
+    
+    for choice in living_room_choice_list:
+            print "\t"+choice
+    
+    living_room_choice = raw_input("\nWhat would you like to do? (Enter A, B, C, or D)\n> ")
+    
+    while health > 0:   
+        if living_room_choice.lower() == "a":
+            print_line()
+            print "\n\tYou limp over to the bookcase.\n"
+            health_status()
+            print "\nCurrent Location: Living Room - Bookcase\n"
+            print "\n\tThere are a few books on the shelf.  You read over the titles:\n"
+            visit_bookcase()
+
+        elif living_room_choice.lower() == "b":
+            print_line()
+            print "\n\tYou limp over to the kitchen.  There are cabinets, a stove,"
+            print "and a fridge."
+            print "\n\tYou notice there is a hallway that leads to a door.\n"
+            health_status()
+            enter_kitchen()
+
+        elif living_room_choice.lower() == "c":
+            print_line()
+            print "\n\tYou turn around and leave the living room.  You are now back in"
+            print "the bedroom.\n"
+            health_status()
+            enter_bedroom()
+
+        elif living_room_choice.lower() == "d":
+            exit()
+
+        else:
+            print_line()
+            print "\nHuh?  Please enter A, B, C, or D.\n"
+            enter_living_room()
+    else:
+        print "\nGAME OVER!\n"
+        play_again_or_exit()
+
+def enter_kitchen():
+    """Player enters kitchen and is given a list of four commands from kitchen_choice_list"""
+
+    global health
+    global has_key
+    global fridge
+
+    kitchen_choice_list = ["A - Open the fridge.", "B - Go to the hallway.", "C - Go back to the living room.", "D - Quit game."]
+    
+    print "CURRENT LOCATION: Kitchen\n"
+    
+    for choice in kitchen_choice_list:
+            print "\t" + choice
+
+    kitchen_choice = raw_input("\nWhat would you like to do? (Enter A, B, C, or D)\n> ")
+    
+    while health > 0:
+        
+        if kitchen_choice.lower() == "a":
+            print_line()
+            if fridge == False:
+                print "\n\tYou open the fridge.  There is one bottle of water inside"
+                print "You take it out and drink it all.  You didn't realize how thirsty"
+                print "you were!\n"
+                health = health + 20
+                fridge = True
+                print "\n\tYour health has increased to {}%\n".format(health)
+                enter_kitchen()
+            else:
+                print "\n\tThe fridge is empty...\n"
+                enter_kitchen()
+
+        elif kitchen_choice.lower() == "b":
+            print_line()
+            print "\n\tYou limp down the hallway.  Down the hall you see a door,"
+            print "but it's been locked from the inside with a padlock.\n"
+            if has_key == True:
+                print "\tYou have a key in your inventory!\n"
+                print "\tYou insert the key into the lock, and hear the click."
+                print "You remove the padlock and open the door."
+                print "\nYOU WIN!!\n"
+                play_again_or_exit()
+            else:
+                print "\tThere has to be a key that goes to this.\n"
+                health_status()
+                enter_kitchen()
+
+        elif kitchen_choice.lower() == "c":
+            print_line()
+            print "\n\tYou turn around and limp over to the living room.\n"
+            health_status()
+            enter_living_room()
+
+        elif kitchen_choice.lower() == "d":
+            exit()
+
+        else:
+            print_line()
+            print "\nHuh?  Please enter A, B, C, or D.\n"
+            enter_kitchen()
+
+    else:
+        print "\nGAME OVER!\n"
+        play_again_or_exit()
 
 intro()
